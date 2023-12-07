@@ -6,7 +6,8 @@ const app = express();
 app.use(express.json());
 
 //* SERVICIO
-const { poolConnect } = require('./service/conexion');
+const service = require('./service/conexion');
+
 // * MIDDLEWARE
 app.use(cors());
 

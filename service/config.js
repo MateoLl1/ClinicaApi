@@ -1,8 +1,8 @@
 const localConfig = {
-  user: 'tu-info',
-  password: 'tu-info',
+  user: 'sa',
+  password: '123456',
   server: 'localhost',
-  database: 'tu-info',
+  database: 'Integrador',
   port: 1433,
   options: {
     encrypt: true,
