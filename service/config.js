@@ -1,3 +1,5 @@
+const sql = require('mssql');
+
 const localConfig = {
   user: 'sa',
   password: '123456',
@@ -10,4 +12,18 @@ const localConfig = {
   },
 };
 
-module.exports = localConfig;
+const pool = new sql.ConnectionPool(localConfig);
+const poolConnect = pool.connect();
+
+poolConnect
+  .then(() => {
+    // console.log('Conexión exitosa a la base de datos');
+  })
+  .catch((err) => {
+    console.error('Error al conectar a la base de datos:', err);
+  });
+
+module.exports = {
+  pool,
+  poolConnect,
+};
