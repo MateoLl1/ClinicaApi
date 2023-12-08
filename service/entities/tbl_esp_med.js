@@ -10,7 +10,7 @@ async function getEspecialidadesMed() {
     `;
 
     const data = await request.query(query);
-    return data.recordset;
+    return data.recordsets;
   } catch (error) {
     console.error(`Error al obtener las especialidades ${error}`);
   }
