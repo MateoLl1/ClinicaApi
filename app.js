@@ -21,8 +21,12 @@ app.post('/admin/esp-med/insert', async (req, res) => {
   const request = req.body;
   res.json(
     await service.tbl_esp_med.insertEspecialidadMed(
+      request.nombre,
+      request.imagen,
       request.descr,
-      request.imagen
+      request.subtitle,
+      request.imagen2,
+      request.parrafo
     )
   );
 });
@@ -32,8 +36,12 @@ app.post('/admin/esp-med/update', async (req, res) => {
   console.log(request);
   const datos = await service.tbl_esp_med.updateEspecialidadMed(
     request.id,
+    request.nombre,
+    request.imagen,
     request.descr,
-    request.imagen
+    request.subtitle,
+    request.imagen2,
+    request.parrafo
   );
   res.json(datos);
 });
@@ -44,18 +52,74 @@ app.post('/admin/esp-med/delete', async (req, res) => {
   res.json(await service.tbl_esp_med.deleteEspecialidadesMed(request.id));
 });
 
-app.get('/admin/doctor_esp', async (req, res) => {
-  res.json(await service.tbl_doctor_esp.getDoctorEspId(1));
+app.get('/admin/tipo-empleado', async (req, res) => {
+  const request = req.body;
+  res.json(await service.tbl_tipo_empleado.getTipoEmpleadoById(request.id));
+});
+
+app.post('/admin/tipo-empleado/insert', async (req, res) => {
+  const request = req.body;
+  res.json(await service.tbl_tipo_empleado.insertTipoEmpleado(request.descr));
+});
+
+app.post('/admin/tipo-empleado/delete', async (req, res) => {
+  const request = req.body;
+  res.json(await service.tbl_tipo_empleado.deleteTipoEmpleado(request.id));
+});
+
+app.post('/admin/tipo-empleado/update', async (req, res) => {
+  const request = req.body;
+  res.json(
+    await service.tbl_tipo_empleado.updateTipoEmpplead(
+      request.id,
+      request.descr
+    )
+  );
+});
+
+app.get('/admin/empleado', async (req, res) => {
+  res.json(await service.tbl_empleado.getEmpleados());
 });
 
 app.post('/admin/empleado/insert', async (req, res) => {
-  const data = req.body;
-  console.log(data);
-  res.json(await service.tbl_empleado.insertEmpleado());
+  const request = req.body;
+  console.log(request);
+  res.json(
+    await service.tbl_empleado.insertEmpleado(
+      request.email,
+      request.cedula,
+      request.nombres,
+      request.fechaNa,
+      request.imagen,
+      request.sexo,
+      request.tp_em_id
+    )
+  );
 });
 
-app.get('/admin/doctor_esp/insert', async (req, res) => {
-  res.json(await service.tbl_doctor_esp.insertDoctorEsp(1, 1));
+app.post('/admin/empleado/update', async (req, res) => {
+  const request = req.body;
+  console.log(request);
+  res.json(
+    await service.tbl_empleado.updateEmpleado(
+      request.id,
+      request.email,
+      request.password,
+      request.cedula,
+      request.nombres,
+      request.fechaNa,
+      request.imagen,
+      request.sexo,
+      request.tp_em_id
+    )
+  );
+});
+
+app.post('/admin/empleado/update/cambiar-pass', async (req, res) => {
+  const request = req.body;
+  res.json(
+    await service.tbl_empleado.updatePassword(request.id, request.password)
+  );
 });
 
 app.listen(puerto, () => {

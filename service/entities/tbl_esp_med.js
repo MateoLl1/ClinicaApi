@@ -6,34 +6,46 @@ async function getEspecialidadesMed() {
     const request = pool.request();
 
     const query = `
-    select * from tbl_especialidades_medicas where sp_me_estado = 'A'
+    select * from tbl_especialidades_medicas
     `;
 
     const data = await request.query(query);
-    return data.recordsets;
+    return data.recordset;
   } catch (error) {
     console.error(`Error al obtener las especialidades ${error}`);
   }
 }
 
-async function insertEspecialidadMed(descripcion, imagen) {
+async function insertEspecialidadMed(
+  nombre,
+  imagen,
+  descr,
+  subtitle,
+  imagen2,
+  parrafo
+) {
   try {
     await poolConnect;
-    const consulta = pool.request();
+    const request = pool.request();
 
     //* PARAMETROS
-    consulta.input('sp_me_desc', descripcion);
-    consulta.input('sp_me_imagen', imagen);
-    consulta.input('sp_me_fecha_reg', new Date());
-    consulta.input('sp_me_estado', 'A');
+    request.input('sp_me_nombre', nombre);
+    request.input('sp_me_imagen', imagen);
+    request.input('sp_me_fecha_reg', new Date());
+    request.input('sp_me_descr', descr);
+    request.input('sp_me_sub_ti', subtitle);
+    request.input('sp_me_imagen2', imagen2);
+    request.input('sp_me_parrafo', parrafo);
 
     const query = `
-      INSERT INTO tbl_especialidades_medicas 
-      (sp_me_desc, sp_me_imagen, sp_me_fecha_reg, sp_me_estado)
-      VALUES (@sp_me_desc, @sp_me_imagen, @sp_me_fecha_reg, @sp_me_estado)
+      insert into tbl_especialidades_medicas
+      (sp_me_nombre,sp_me_fecha_reg,sp_me_imagen,sp_me_descr,
+      sp_me_sub_ti,sp_me_imagen2,sp_me_parrafo)
+      values (@sp_me_nombre,@sp_me_fecha_reg,@sp_me_imagen,@sp_me_descr,
+      @sp_me_sub_ti,@sp_me_imagen2,@sp_me_parrafo)
     `;
 
-    await consulta.query(query);
+    await request.query(query);
     console.log('Especialidad insertada:');
     return true;
   } catch (error) {
@@ -42,18 +54,32 @@ async function insertEspecialidadMed(descripcion, imagen) {
   }
 }
 
-async function updateEspecialidadMed(id, descripcion, imagen) {
+async function updateEspecialidadMed(
+  id,
+  nombre,
+  imagen,
+  descr,
+  subtitle,
+  imagen2,
+  parrafo
+) {
   try {
     await poolConnect;
     const request = pool.request();
 
     request.input('sp_me_id', id);
-    request.input('sp_me_desc', descripcion);
+    request.input('sp_me_nombre', nombre);
     request.input('sp_me_imagen', imagen);
+    request.input('sp_me_descr', descr);
+    request.input('sp_me_sub_ti', subtitle);
+    request.input('sp_me_imagen2', imagen2);
+    request.input('sp_me_parrafo', parrafo);
 
     const query = `
-    update tbl_especialidades_medicas set 
-    sp_me_desc = @sp_me_desc  , sp_me_imagen = @sp_me_imagen
+    update tbl_especialidades_medicas 
+    set sp_me_nombre = @sp_me_nombre, sp_me_imagen=@sp_me_imagen,
+    sp_me_descr = @sp_me_descr, sp_me_imagen2=@sp_me_imagen2,
+    sp_me_sub_ti = @sp_me_sub_ti, sp_me_parrafo=@sp_me_parrafo
     where sp_me_id = @sp_me_id
     `;
 
@@ -73,8 +99,7 @@ async function deleteEspecialidadesMed(id) {
 
     request.input('sp_me_id', id);
     const query = `
-      update tbl_especialidades_medicas set 
-      sp_me_estado = 'I'
+      delete tbl_especialidades_medicas
       where sp_me_id = @sp_me_id
     `;
 
