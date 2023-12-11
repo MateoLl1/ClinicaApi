@@ -78,11 +78,28 @@ async function getTipoEmpleadoById(id) {
   }
 }
 
+async function getTipoEmpleados() {
+  try {
+    await poolConnect;
+    const request = pool.request();
+
+    const query = `
+    select * from tbl_tipo_empleado
+  `;
+
+    return (await request.query(query)).recordset;
+  } catch (error) {
+    console.log('Error al entregar la data ' + error);
+    return false;
+  }
+}
+
 module.exports = {
   tbl_tipo_empleado: {
     insertTipoEmpleado,
     updateTipoEmpplead,
     deleteTipoEmpleado,
     getTipoEmpleadoById,
+    getTipoEmpleados,
   },
 };
