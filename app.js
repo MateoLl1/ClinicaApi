@@ -53,7 +53,6 @@ app.post('/admin/esp-med/delete', async (req, res) => {
 });
 
 app.get('/admin/tipo-empleado', async (req, res) => {
-  const request = req.body;
   res.json(await service.tbl_tipo_empleado.getTipoEmpleados());
 });
 
