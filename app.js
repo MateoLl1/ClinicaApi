@@ -76,8 +76,8 @@ app.post('/admin/tipo-empleado/update', async (req, res) => {
   );
 });
 
-app.get('/admin/empleado', async (req, res) => {
-  res.json(await service.tbl_empleado.getEmpleados());
+app.get('/admin/empleados', async (req, res) => {
+  res.json(await service.tbl_empleado.getUsuarios());
 });
 
 app.post('/admin/empleado/insert', async (req, res) => {
@@ -112,6 +112,11 @@ app.post('/admin/empleado/update', async (req, res) => {
       request.tp_em_id
     )
   );
+});
+
+app.post('/admin/empleado/delete', async (req, res) => {
+  const request = req.body;
+  res.json(await service.tbl_empleado.deleteEmpleado(request.id));
 });
 
 app.post('/admin/empleado/update/cambiar-pass', async (req, res) => {

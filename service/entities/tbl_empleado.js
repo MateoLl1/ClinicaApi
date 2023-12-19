@@ -144,8 +144,8 @@ async function getEmpleados() {
     const request = pool.request();
 
     const query = `
-  select * from tbl_empleado 
-  where tp_em_id != 1
+    select * from tbl_empleado 
+    where tp_em_id != 1 and em_estado = 'A'
   `;
 
     return (await request.query(query)).recordset;
@@ -160,7 +160,7 @@ async function getUsuarios() {
     const request = pool.request();
 
     const query = `
-  select * from tbl_empleado 
+  select * from tbl_empleado where em_estado = 'A'
   `;
 
     return (await request.query(query)).recordset;
