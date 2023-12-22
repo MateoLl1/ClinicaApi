@@ -170,6 +170,23 @@ async function getUsuarios() {
   }
 }
 
+async function getMedicos() {
+  try {
+    await poolConnect;
+    const request = pool.request();
+
+    const query = `
+    select * from tbl_empleado
+    where tp_em_id = 2 and em_estado = 'A'
+  `;
+
+    return (await request.query(query)).recordset;
+  } catch (error) {
+    console.log(`Erro al carga medicos ` + error);
+    return false;
+  }
+}
+
 module.exports = {
   tbl_empleado: {
     insertEmpleado,
@@ -179,5 +196,6 @@ module.exports = {
     deleteEmpleado,
     getEmpleados,
     getUsuarios,
+    getMedicos,
   },
 };

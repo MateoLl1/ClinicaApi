@@ -41,6 +41,27 @@ async function insertDoctorEsp(empId, spId) {
   }
 }
 
+async function eliminarDoctoEsp(idEmp, idEsp) {
+  try {
+    await poolConnect;
+    const request = pool.request();
+
+    request.input('em_id', idEmp);
+    request.input('sp_me_id', idEsp);
+    const query = `
+    delete from tbl_doctor_esp 
+    where em_id = @em_id and sp_me_id = @sp_me_id
+  `;
+
+    await request.query(query);
+    console.log('Doctor especialidad eliminada');
+    return true;
+  } catch (error) {
+    console.log('Doctor especialidad eliminada ' + error);
+    return false;
+  }
+}
+
 module.exports = {
   tbl_doctor_esp: {
     getDoctorEspId,

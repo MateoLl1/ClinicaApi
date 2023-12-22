@@ -126,6 +126,14 @@ app.post('/admin/empleado/update/cambiar-pass', async (req, res) => {
   );
 });
 
+app.get('/admin/empleado/medico', async (req, res) => {
+  res.json(await service.tbl_empleado.getMedicos());
+});
+
+app.get('/error', (req, res) => {
+  res.send('Status Error 404');
+});
+
 app.listen(puerto, () => {
   console.log(`
   Servidor iniciado en el ${puerto}
