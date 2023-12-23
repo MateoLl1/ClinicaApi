@@ -130,8 +130,23 @@ app.get('/admin/empleado/medico', async (req, res) => {
   res.json(await service.tbl_empleado.getMedicos());
 });
 
-app.get('/error', (req, res) => {
-  res.send('Status Error 404');
+app.post('/admin/empleado/doctor/esp', async (req, res) => {
+  const request = req.body;
+  res.json(await service.tbl_doctor_esp.getEspecidadesDoctor(request.id));
+});
+
+app.post('/admin/empleado/medico/espM/insert', async (req, res) => {
+  const request = req.body;
+  res.json(
+    await service.tbl_doctor_esp.insertDoctorEsp(request.empId, request.spId)
+  );
+});
+
+app.post('/admin/empleado/medico/espM/delete', async (req, res) => {
+  const request = req.body;
+  res.json(
+    await service.tbl_doctor_esp.eliminarDoctoEsp(request.empId, request.spId)
+  );
 });
 
 app.listen(puerto, () => {
