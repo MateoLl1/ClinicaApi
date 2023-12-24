@@ -182,7 +182,63 @@ async function getMedicos() {
 
     return (await request.query(query)).recordset;
   } catch (error) {
-    console.log(`Erro al carga medicos ` + error);
+    console.log(`Error al carga medicos ` + error);
+    return false;
+  }
+}
+
+async function getEmpleadosEliminados() {
+  try {
+    await poolConnect;
+    const request = pool.request();
+
+    const query = `
+  select * from tbl_empleado
+  where em_estado = 'I'
+  `;
+
+    return (await request.query(query)).recordset;
+  } catch (error) {
+    console.log(`Error al cargar empleados eliminados ` + error);
+    return false;
+  }
+}
+
+async function eliminarPermanete(id) {
+  try {
+    await poolConnect;
+    const request = pool.request();
+
+    request.input('em_id', id);
+
+    const query = `
+  delete from tbl_empleado 
+  where em_id = @em_id
+  `;
+
+    return await request.query(query);
+  } catch (error) {
+    console.log('Error al eliminar permanentemente el empleado ' + error);
+    return false;
+  }
+}
+
+async function recuperarEmpleado(id) {
+  try {
+    await poolConnect;
+    const request = pool.request();
+
+    request.input('em_id', id);
+    const query = `
+    update tbl_empleado set em_estado = 'A'
+    where em_id = @em_id
+    `;
+
+    await request.query(query);
+    console.log('Empleado recuperado');
+    return true;
+  } catch (error) {
+    console.log('Error al recuperar empleado ' + error);
     return false;
   }
 }
@@ -197,5 +253,8 @@ module.exports = {
     getEmpleados,
     getUsuarios,
     getMedicos,
+    getEmpleadosEliminados,
+    eliminarPermanete,
+    recuperarEmpleado,
   },
 };

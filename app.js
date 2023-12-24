@@ -126,8 +126,23 @@ app.post('/admin/empleado/update/cambiar-pass', async (req, res) => {
   );
 });
 
-app.get('/admin/empleado/medico', async (req, res) => {
+app.get('/admin/empleado/medico/activos', async (req, res) => {
   res.json(await service.tbl_empleado.getMedicos());
+});
+
+app.get('/admin/empleado/papelera', async (req, res) => {
+  res.json(await service.tbl_empleado.getEmpleadosEliminados());
+});
+
+app.post('/admin/empleado/recuperar', async (req, res) => {
+  const request = req.body;
+
+  res.json(await service.tbl_empleado.recuperarEmpleado(request.em_id));
+});
+
+app.post('/admin/empleado/delete/permanente', async (req, res) => {
+  const request = req.body;
+  res.json(await service.tbl_empleado.eliminarPermanete(request.em_id));
 });
 
 app.post('/admin/empleado/doctor/esp', async (req, res) => {

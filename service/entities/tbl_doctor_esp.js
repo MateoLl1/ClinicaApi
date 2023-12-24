@@ -1,5 +1,25 @@
 const { poolConnect, pool } = require('../config');
 
+async function getDoctorEspId(id) {
+  try {
+    await poolConnect;
+    const request = pool.request();
+
+    request.input('sp_me_id', id);
+    const query = `
+        select * from tbl_doctor_esp 
+        where sp_me_id = @sp_me_id
+    `;
+
+    const data = await request.query(query);
+    console.log(data);
+    return data.recordset;
+  } catch (error) {
+    console.log('Error al obtener tbl_doctor_esp');
+    return false;
+  }
+}
+
 async function insertDoctorEsp(empId, spId) {
   try {
     await poolConnect;
@@ -13,11 +33,11 @@ async function insertDoctorEsp(empId, spId) {
   `;
 
     await request.query(query);
-    console.log('Registro de especialidad exitoso');
+    console.log('Registro insertado');
     return true;
   } catch (error) {
     console.error(`Error en el registro ${error}`);
-    return false;
+    return true;
   }
 }
 
@@ -62,8 +82,9 @@ async function getEspecidadesDoctor(id) {
 
 module.exports = {
   tbl_doctor_esp: {
+    getDoctorEspId,
     insertDoctorEsp,
-    eliminarDoctoEsp,
     getEspecidadesDoctor,
+    eliminarDoctoEsp,
   },
 };
