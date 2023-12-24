@@ -164,6 +164,11 @@ app.post('/admin/empleado/medico/espM/delete', async (req, res) => {
   );
 });
 
+app.post('/admin/esp-med/byId', async (req, res) => {
+  const request = req.body;
+  res.json(await service.tbl_esp_med.getEspecialidadesMedById(request.id));
+});
+
 app.listen(puerto, () => {
   console.log(`
   Servidor iniciado en el ${puerto}

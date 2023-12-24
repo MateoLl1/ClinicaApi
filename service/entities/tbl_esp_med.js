@@ -112,11 +112,31 @@ async function deleteEspecialidadesMed(id) {
   }
 }
 
+async function getEspecialidadesMedById(id) {
+  try {
+    await poolConnect;
+    const request = pool.request();
+
+    request.input('sp_me_id', id);
+
+    const query = `
+  select * from tbl_especialidades_medicas
+  where sp_me_id = @sp_me_id
+  `;
+
+    return (await request.query(query)).recordset;
+  } catch (error) {
+    console.log('Error al obtener espeicilidad por id ' + error);
+    return false;
+  }
+}
+
 module.exports = {
   tbl_esp_med: {
     insertEspecialidadMed,
     getEspecialidadesMed,
     updateEspecialidadMed,
     deleteEspecialidadesMed,
+    getEspecialidadesMedById,
   },
 };
