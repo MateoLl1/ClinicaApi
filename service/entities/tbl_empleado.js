@@ -82,7 +82,6 @@ async function updatePassword(id, password) {
 async function updateEmpleado(
   id,
   email,
-  password,
   cedula,
   nombres,
   fechaNa,
@@ -96,7 +95,6 @@ async function updateEmpleado(
 
     request.input('em_id', id);
     request.input('em_email', email);
-    request.input('em_password', password);
     request.input('em_cedula', cedula);
     request.input('em_nombres', nombres);
     request.input('em_fecha_na', fechaNa);
@@ -104,7 +102,7 @@ async function updateEmpleado(
     request.input('em_sexo', sexo);
     request.input('tp_em_id', tp_em_id);
     const query = `
-    update tbl_empleado set em_email = @em_email ,em_password = @em_password,
+    update tbl_empleado set em_email = @em_email ,
     em_cedula = @em_cedula , em_nombres= @em_nombres, em_fecha_na = @em_fecha_na,
     em_imagen = @em_imagen, em_sexo = @em_sexo, tp_em_id = @tp_em_id
     where em_id = @em_id

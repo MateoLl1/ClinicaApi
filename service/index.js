@@ -3,6 +3,7 @@ const {
   tbl_doctor_esp,
   tbl_empleado,
   tbl_tipo_empleado,
+  autenticacion,
 } = require('./entities/entities');
 
 const { date } = require('./date');
@@ -13,4 +14,5 @@ module.exports = {
   tbl_doctor_esp,
   tbl_empleado,
   tbl_tipo_empleado,
+  autenticacion,
 };

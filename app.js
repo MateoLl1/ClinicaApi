@@ -103,7 +103,6 @@ app.post('/admin/empleado/update', async (req, res) => {
     await service.tbl_empleado.updateEmpleado(
       request.id,
       request.email,
-      request.password,
       request.cedula,
       request.nombres,
       request.fechaNa,
@@ -167,6 +166,17 @@ app.post('/admin/empleado/medico/espM/delete', async (req, res) => {
 app.post('/admin/esp-med/byId', async (req, res) => {
   const request = req.body;
   res.json(await service.tbl_esp_med.getEspecialidadesMedById(request.id));
+});
+
+app.post('/auth/login', async (req, res) => {
+  const request = req.body;
+  console.log(request);
+  res.json(
+    await service.autenticacion.validarCredenciales(
+      request.email,
+      request.password
+    )
+  );
 });
 
 app.listen(puerto, () => {
