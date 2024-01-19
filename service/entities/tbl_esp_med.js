@@ -22,6 +22,7 @@ async function insertEspecialidadMed(
   descr,
   subtitle,
   imagen2,
+  icon,
   parrafo
 ) {
   try {
@@ -35,14 +36,15 @@ async function insertEspecialidadMed(
     request.input('sp_me_descr', descr);
     request.input('sp_me_sub_ti', subtitle);
     request.input('sp_me_imagen2', imagen2);
+    request.input('sp_me_icon', icon);
     request.input('sp_me_parrafo', parrafo);
 
     const query = `
       insert into tbl_especialidades_medicas
       (sp_me_nombre,sp_me_fecha_reg,sp_me_imagen,sp_me_descr,
-      sp_me_sub_ti,sp_me_imagen2,sp_me_parrafo)
+      sp_me_sub_ti,sp_me_imagen2,sp_me_icon,sp_me_parrafo)
       values (@sp_me_nombre,@sp_me_fecha_reg,@sp_me_imagen,@sp_me_descr,
-      @sp_me_sub_ti,@sp_me_imagen2,@sp_me_parrafo)
+      @sp_me_sub_ti,@sp_me_imagen2,@sp_me_icon,@sp_me_parrafo)
     `;
 
     await request.query(query);
@@ -61,6 +63,7 @@ async function updateEspecialidadMed(
   descr,
   subtitle,
   imagen2,
+  icon,
   parrafo
 ) {
   try {
@@ -73,13 +76,14 @@ async function updateEspecialidadMed(
     request.input('sp_me_descr', descr);
     request.input('sp_me_sub_ti', subtitle);
     request.input('sp_me_imagen2', imagen2);
+    request.input('sp_me_icon', icon);
     request.input('sp_me_parrafo', parrafo);
 
     const query = `
     update tbl_especialidades_medicas 
     set sp_me_nombre = @sp_me_nombre, sp_me_imagen=@sp_me_imagen,
     sp_me_descr = @sp_me_descr, sp_me_imagen2=@sp_me_imagen2,
-    sp_me_sub_ti = @sp_me_sub_ti, sp_me_parrafo=@sp_me_parrafo
+    sp_me_sub_ti = @sp_me_sub_ti, sp_me_parrafo=@sp_me_parrafo, sp_me_icon=@sp_me_icon
     where sp_me_id = @sp_me_id
     `;
 

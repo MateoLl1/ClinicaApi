@@ -26,6 +26,7 @@ app.post('/admin/esp-med/insert', async (req, res) => {
       request.descr,
       request.subtitle,
       request.imagen2,
+      request.icon,
       request.parrafo
     )
   );
@@ -41,6 +42,7 @@ app.post('/admin/esp-med/update', async (req, res) => {
     request.descr,
     request.subtitle,
     request.imagen2,
+    request.icon,
     request.parrafo
   );
   res.json(datos);
