@@ -12,6 +12,8 @@ const service = require('./service');
 app.use(cors());
 
 //! ENDPOINTS DE ADMINISTRACION
+
+//? ESPECIALIDADES MEDICAS
 app.get('/admin/esp-med', async (req, res) => {
   const datos = await service.tbl_esp_med.getEspecialidadesMed();
   res.json(datos);
@@ -54,6 +56,7 @@ app.post('/admin/esp-med/delete', async (req, res) => {
   res.json(await service.tbl_esp_med.deleteEspecialidadesMed(request.id));
 });
 
+//? TIPO EMPLEADO
 app.get('/admin/tipo-empleado', async (req, res) => {
   res.json(await service.tbl_tipo_empleado.getTipoEmpleados());
 });
@@ -78,6 +81,7 @@ app.post('/admin/tipo-empleado/update', async (req, res) => {
   );
 });
 
+//? EMPLEADOS
 app.get('/admin/empleados', async (req, res) => {
   res.json(await service.tbl_empleado.getUsuarios());
 });
@@ -165,11 +169,34 @@ app.post('/admin/empleado/medico/espM/delete', async (req, res) => {
   );
 });
 
+//? ESPECIALIDADES MEDICAS
 app.post('/admin/esp-med/byId', async (req, res) => {
   const request = req.body;
   res.json(await service.tbl_esp_med.getEspecialidadesMedById(request.id));
 });
 
+//? NOTICIAS
+app.post('/admin/news', async (req, res) => {
+  const request = req.body;
+  res.json(await service.tbl_noticias.getNoticias());
+});
+app.post('/admin/news/byId', async (req, res) => {
+  const request = req.body;
+  res.json(await service.tbl_noticias.getNoticiasById(request.id));
+});
+
+app.post('/admin/news/insert', async (req, res) => {
+  const request = req.body;
+  res.json(
+    await service.tbl_noticias.insertNoticia(
+      request.titulo,
+      request.content,
+      request.image
+    )
+  );
+});
+
+//? SEGURIDAD
 app.post('/auth/login', async (req, res) => {
   const request = req.body;
   console.log(request);
