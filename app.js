@@ -176,7 +176,7 @@ app.post('/admin/esp-med/byId', async (req, res) => {
 });
 
 //? NOTICIAS
-app.post('/admin/news', async (req, res) => {
+app.get('/admin/news', async (req, res) => {
   const request = req.body;
   res.json(await service.tbl_noticias.getNoticias());
 });
@@ -185,10 +185,26 @@ app.post('/admin/news/byId', async (req, res) => {
   res.json(await service.tbl_noticias.getNoticiasById(request.id));
 });
 
+app.post('/admin/news/delete', async (req, res) => {
+  const request = req.body;
+  res.json(await service.tbl_noticias.eliminarNoticia(request.id));
+});
+
 app.post('/admin/news/insert', async (req, res) => {
   const request = req.body;
   res.json(
     await service.tbl_noticias.insertNoticia(
+      request.titulo,
+      request.content,
+      request.image
+    )
+  );
+});
+app.post('/admin/news/update', async (req, res) => {
+  const request = req.body;
+  res.json(
+    await service.tbl_noticias.uptadeNoticia(
+      request.id,
       request.titulo,
       request.content,
       request.image
