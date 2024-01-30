@@ -177,7 +177,6 @@ app.post('/admin/esp-med/byId', async (req, res) => {
 
 //? NOTICIAS
 app.get('/admin/news', async (req, res) => {
-  const request = req.body;
   res.json(await service.tbl_noticias.getNoticias());
 });
 app.post('/admin/news/byId', async (req, res) => {
