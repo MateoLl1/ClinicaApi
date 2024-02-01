@@ -214,7 +214,7 @@ async function eliminarPermanete(id) {
   where em_id = @em_id
   `;
 
-    return await request.query(query);
+    return (await request.query(query)).recordset;
   } catch (error) {
     console.log('Error al eliminar permanentemente el empleado ' + error);
     return false;

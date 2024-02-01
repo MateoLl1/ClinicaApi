@@ -211,7 +211,7 @@ app.post('/admin/news/update', async (req, res) => {
   );
 });
 
-//? SEGURIDAD
+//! SEGURIDAD
 app.post('/auth/login', async (req, res) => {
   const request = req.body;
   console.log(request);
@@ -219,6 +219,20 @@ app.post('/auth/login', async (req, res) => {
     await service.autenticacion.validarCredenciales(
       request.email,
       request.password
+    )
+  );
+});
+
+app.post('/auth/singIn', async (req, res) => {
+  const request = req.body;
+  console.log(request);
+  res.json(
+    await service.autenticacion.registarPaciente(
+      request.email,
+      request.cedula,
+      request.nombres,
+      request.fechaNa,
+      request.sexo
     )
   );
 });
