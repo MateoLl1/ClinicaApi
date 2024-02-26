@@ -211,6 +211,35 @@ app.post('/admin/news/update', async (req, res) => {
   );
 });
 
+//! NEGOCIO
+
+app.post('/buscar/paciente', async (req, res) => {
+  const request = req.body;
+  res.json(await service.tbl_agendamiento.buscarPacientes(request.id));
+});
+
+app.post('/buscar/medicoPorEspecialidad', async (req, res) => {
+  const request = req.body;
+  console.log(request);
+  res.json(
+    await service.tbl_agendamiento.cargarMedicoPorEspecialidad(request.id)
+  );
+});
+
+app.post('/agendar-citas', async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  res.json(
+    await service.tbl_agendamiento.agendarCita(
+      data.hora,
+      data.fecha,
+      data.paId,
+      data.drId,
+      data.espId
+    )
+  );
+});
+
 //! SEGURIDAD
 app.post('/auth/login', async (req, res) => {
   const request = req.body;

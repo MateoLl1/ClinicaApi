@@ -36,7 +36,10 @@ async function registarPaciente(email, cedula, nombres, fechaNa, sexo) {
     request.input('em_password', cedula);
     request.input('em_cedula', cedula);
     request.input('em_nombres', nombres);
-    request.input('em_imagen', '');
+    request.input(
+      'em_imagen',
+      'https://th.bing.com/th/id/OIP.JwEJgEC-hx43MR-2OJa_IQHaHw?rs=1&pid=ImgDetMain'
+    );
     request.input('em_fecha_na', fechaNa);
     request.input('em_fecha_reg', new Date());
     request.input('em_sexo', sexo);
@@ -55,7 +58,7 @@ async function registarPaciente(email, cedula, nombres, fechaNa, sexo) {
     return await validarCredenciales(email, cedula);
   } catch (error) {
     console.log('Error al registar paciente ' + error);
-    return null;
+    return;
   }
 }
 
