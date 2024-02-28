@@ -226,6 +226,7 @@ app.post('/buscar/medicoPorEspecialidad', async (req, res) => {
   );
 });
 
+//! AGENDAMIENTO DE CITA
 app.post('/agendar-citas', async (req, res) => {
   const data = req.body;
   console.log(data);
@@ -238,6 +239,17 @@ app.post('/agendar-citas', async (req, res) => {
       data.espId
     )
   );
+});
+app.post('/medico/citas', async (req, res) => {
+  const data = req.body;
+  res.json(
+    await service.tbl_agendamiento.cargarCitasDelDoctor(data.dr_id, data.sp_id)
+  );
+});
+
+app.post('/medico/citas/eliminar', async (req, res) => {
+  const data = req.body;
+  res.json(await service.tbl_agendamiento.eliminarCita(data.id));
 });
 
 //! SEGURIDAD

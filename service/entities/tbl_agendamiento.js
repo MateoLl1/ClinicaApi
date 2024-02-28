@@ -97,10 +97,46 @@ async function validarCitaExistente(drId, paId, fecha, hora) {
   }
 }
 
+async function cargarCitasDelDoctor(drId, espId) {
+  try {
+    await poolConnect;
+    const request = pool.request();
+    request.input('dr_id', drId);
+    request.input('sp_id', espId);
+    const query = `
+    select * from tbl_agendamiento
+    where dr_id = @dr_id and sp_id = @sp_id
+  `;
+    return (await request.query(query)).recordset;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
+
+async function eliminarCita(id) {
+  try {
+    await poolConnect;
+    const request = pool.request();
+    request.input('ag_id', id);
+    const query = `
+  delete from tbl_agendamiento
+  where ag_id = @ag_id
+  `;
+    await request.query(query);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
 module.exports = {
   tbl_agendamiento: {
     buscarPacientes,
     cargarMedicoPorEspecialidad,
     agendarCita,
+    cargarCitasDelDoctor,
+    eliminarCita,
   },
 };
