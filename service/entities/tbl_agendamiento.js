@@ -113,6 +113,21 @@ async function cargarCitasDelDoctor(drId, espId) {
     return [];
   }
 }
+async function cargarCitasDelPaciente(id) {
+  try {
+    await poolConnect;
+    const request = pool.request();
+    request.input('pa_id', id);
+    const query = `
+    select * from tbl_agendamiento
+    where pa_id = @pa_id
+  `;
+    return (await request.query(query)).recordset;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
 
 async function eliminarCita(id) {
   try {
@@ -138,5 +153,6 @@ module.exports = {
     agendarCita,
     cargarCitasDelDoctor,
     eliminarCita,
+    cargarCitasDelPaciente,
   },
 };

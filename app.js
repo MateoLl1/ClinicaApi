@@ -247,6 +247,11 @@ app.post('/medico/citas', async (req, res) => {
   );
 });
 
+app.post('/paciente/citas', async (req, res) => {
+  const data = req.body;
+  res.json(await service.tbl_agendamiento.cargarCitasDelPaciente(data.id));
+});
+
 app.post('/medico/citas/eliminar', async (req, res) => {
   const data = req.body;
   res.json(await service.tbl_agendamiento.eliminarCita(data.id));
