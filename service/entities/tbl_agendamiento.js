@@ -119,8 +119,10 @@ async function cargarCitasDelPaciente(id) {
     const request = pool.request();
     request.input('pa_id', id);
     const query = `
-    select * from tbl_agendamiento
-    where pa_id = @pa_id
+    SELECT tbl_agendamiento.*, tbl_empleado.*
+    FROM tbl_agendamiento
+    INNER JOIN tbl_empleado ON tbl_agendamiento.pa_id = tbl_empleado.em_id
+    WHERE tbl_agendamiento.pa_id = @pa_id
   `;
     return (await request.query(query)).recordset;
   } catch (error) {
