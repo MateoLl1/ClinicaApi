@@ -86,6 +86,11 @@ app.get('/admin/empleados', async (req, res) => {
   res.json(await service.tbl_empleado.getUsuarios());
 });
 
+app.post('/admin/empleado/byId', async (req, res) => {
+  const data = req.body;
+  res.json(await service.tbl_empleado.cargarEmpleadoById(data.id, data.tpId));
+});
+
 app.post('/admin/empleado/insert', async (req, res) => {
   const request = req.body;
   console.log(request);

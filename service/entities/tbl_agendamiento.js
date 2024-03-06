@@ -10,7 +10,7 @@ async function buscarPacientes(cedula) {
     request.input('em_cedula', cedula);
     const query = `
       SELECT * FROM tbl_empleado
-      WHERE em_cedula LIKE '%' + @em_cedula + '%' and tp_em_id = '4'
+      WHERE em_cedula LIKE '%' + @em_cedula + '%' and tp_em_id = '4' and em_estado = 'A' 
     `;
 
     const result = await request.query(query);

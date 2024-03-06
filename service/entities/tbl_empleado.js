@@ -241,6 +241,23 @@ async function recuperarEmpleado(id) {
   }
 }
 
+async function cargarEmpleadoById(id, tpId) {
+  try {
+    await poolConnect;
+    const request = pool.request();
+    request.input('em_id', id);
+    request.input('tp_em_id', tpId);
+    const query = `
+  select * from tbl_empleado
+  where em_id = @em_id and tp_em_id = @tp_em_id
+  `;
+
+    return (await request.query(query)).recordset;
+  } catch (error) {
+    return [];
+  }
+}
+
 module.exports = {
   tbl_empleado: {
     insertEmpleado,
@@ -254,5 +271,6 @@ module.exports = {
     getEmpleadosEliminados,
     eliminarPermanete,
     recuperarEmpleado,
+    cargarEmpleadoById,
   },
 };
