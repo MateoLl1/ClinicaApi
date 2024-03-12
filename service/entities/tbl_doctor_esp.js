@@ -69,8 +69,8 @@ async function getEspecidadesDoctor(id) {
 
     request.input('em_id', id);
     const query = `
-  select * from tbl_doctor_esp 
-  where em_id = @em_id
+    select * from tbl_doctor_esp 
+    where em_id = @em_id
   `;
 
     return (await request.query(query)).recordset;
@@ -80,11 +80,28 @@ async function getEspecidadesDoctor(id) {
   }
 }
 
+async function cargarEspecilidadByDoctorId(id) {
+  await poolConnect;
+  const request = pool.request();
+  request.input('id', id  )
+
+  request.input('em_id', id);
+  const query = `
+      SELECT *
+      FROM tbl_doctor_esp AS de
+      INNER JOIN tbl_especialidades_medicas AS em ON de.sp_me_id = em.sp_me_id
+      WHERE de.em_id = @em_id;
+  `;
+  return (await request.query(query)).recordset;
+}
+
+
 module.exports = {
   tbl_doctor_esp: {
     getDoctorEspId,
     insertDoctorEsp,
     getEspecidadesDoctor,
     eliminarDoctoEsp,
+    cargarEspecilidadByDoctorId,
   },
 };

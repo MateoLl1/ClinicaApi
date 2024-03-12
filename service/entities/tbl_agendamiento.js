@@ -148,6 +148,20 @@ async function eliminarCita(id) {
   }
 }
 
+async function obtenerCalendarioDeCitasDocotorPorEsp(id) {
+  await poolConnect;
+  const request = pool.request();
+
+  request.input('dr_id', id);
+  const query = `
+  SELECT *
+  FROM tbl_agendamiento AS ag
+  INNER JOIN tbl_empleado AS emp ON ag.pa_id = emp.em_id
+  WHERE ag.dr_id = @dr_id;
+  `;
+  return (await request.query(query)).recordset;
+}
+
 module.exports = {
   tbl_agendamiento: {
     buscarPacientes,
@@ -156,5 +170,6 @@ module.exports = {
     cargarCitasDelDoctor,
     eliminarCita,
     cargarCitasDelPaciente,
+    obtenerCalendarioDeCitasDocotorPorEsp,
   },
 };

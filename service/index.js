@@ -6,6 +6,7 @@ const {
   tbl_noticias,
   autenticacion,
   tbl_agendamiento,
+  tbl_consulta,
 } = require('./entities/entities');
 
 const { date } = require('./date');
@@ -19,4 +20,5 @@ module.exports = {
   tbl_tipo_empleado,
   autenticacion,
   tbl_agendamiento,
+  tbl_consulta,
 };

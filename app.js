@@ -160,6 +160,13 @@ app.post('/admin/empleado/doctor/esp', async (req, res) => {
   res.json(await service.tbl_doctor_esp.getEspecidadesDoctor(request.id));
 });
 
+app.post('/admin/empleado/doctorID/esp', async (req, res) => {
+  const request = req.body;
+  res.json(
+    await service.tbl_doctor_esp.cargarEspecilidadByDoctorId(request.id)
+  );
+});
+
 app.post('/admin/empleado/medico/espM/insert', async (req, res) => {
   const request = req.body;
   res.json(
@@ -260,6 +267,45 @@ app.post('/paciente/citas', async (req, res) => {
 app.post('/medico/citas/eliminar', async (req, res) => {
   const data = req.body;
   res.json(await service.tbl_agendamiento.eliminarCita(data.id));
+});
+
+//! CALENDARIO DOCTOR
+
+app.post('/medico/citas/calendario', async (req, res) => {
+  const data = req.body;
+  res.json(
+    await service.tbl_agendamiento.obtenerCalendarioDeCitasDocotorPorEsp(
+      data.id
+    )
+  );
+});
+
+//! CONSULTA MEDICA
+
+app.post('/consulta/medica/diagnostico', async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  res.json(
+    await service.tbl_consulta.insertConsulta(
+      data.motivo,
+      data.diagnostico,
+      data.tratamiento,
+      data.indicaciones,
+      data.asitencia,
+      data.agId
+    )
+  );
+});
+
+app.post('/medico/consulta/yaAtendida', async (req, res) => {
+  const data = req.body;
+  res.json(await service.tbl_consulta.consultaYaAtendida(data.ag_id));
+});
+
+//! HISTORIAL PACIENTE
+app.post('/paciente/historial/id', async (req, res) => {
+  const data = req.body;
+  res.json(await service.tbl_consulta.cargarHistorialPacienteById(data.id));
 });
 
 //! SEGURIDAD
